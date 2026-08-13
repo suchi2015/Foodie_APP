@@ -7,11 +7,11 @@ const RestaurantCard = ({ restaurant }) => {
     <Link to={`/restaurant/${restaurant._id}`} className="restaurant-card">
       <div className="restaurant-image-wrapper">
         <img
-          src={restaurant.image || 'https://via.placeholder.com/400x200?text=Restaurant'}
+          src={restaurant.image}
           alt={restaurant.name}
           className="restaurant-image"
           onError={(e) => {
-            e.target.src = 'https://via.placeholder.com/400x200?text=Restaurant';
+            e.target.src = `https://res.cloudinary.com/dbqve7d4m/image/fetch/w_400,h_200,c_fill,q_auto/https://via.placeholder.com/400x200?text=${encodeURIComponent(restaurant.name)}`;
           }}
         />
         {!restaurant.isOpen && (
@@ -26,7 +26,7 @@ const RestaurantCard = ({ restaurant }) => {
           <span className="dot">·</span>
           <span>{restaurant.deliveryTime}</span>
           <span className="dot">·</span>
-          <span>${restaurant.deliveryFee} delivery</span>
+          <span>₹{Math.round(restaurant.deliveryFee)} delivery</span>
         </div>
         {restaurant.tags && restaurant.tags.length > 0 && (
           <div className="restaurant-tags">
