@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../../api';
 import toast from 'react-hot-toast';
 import './AdminOrders.css';
 
@@ -26,7 +26,7 @@ const AdminOrders = () => {
   const fetchOrders = async () => {
     try {
       setLoading(true);
-      const { data } = await axios.get('/api/orders');
+      const { data } = await api.get('/api/orders');
       setOrders(data);
     } catch (err) {
       toast.error('Failed to load orders');
@@ -38,7 +38,7 @@ const AdminOrders = () => {
   const updateStatus = async (orderId, newStatus) => {
     setUpdating(true);
     try {
-      const { data } = await axios.put(`/api/orders/${orderId}/status`, { status: newStatus });
+      const { data } = await api.put(`/api/orders/${orderId}/status`, { status: newStatus });
       toast.success(`Order marked as "${STATUS_LABELS[newStatus]}"`);
       setOrders((prev) => prev.map((o) => (o._id === orderId ? { ...o, status: newStatus } : o)));
       if (selectedOrder?._id === orderId) {

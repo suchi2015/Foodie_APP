@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
+import api from '../api';
 import { useCart } from '../context/CartContext';
 import MenuItemCard from '../components/MenuItemCard';
 import ItemPopup from '../components/ItemPopup';
@@ -24,8 +24,8 @@ const RestaurantDetail = () => {
     const fetchData = async () => {
       try {
         const [rRes, mRes] = await Promise.all([
-          axios.get(`/api/restaurants/${id}`),
-          axios.get(`/api/menu/${id}`),
+          api.get(`/api/restaurants/${id}`),
+          api.get(`/api/menu/${id}`),
         ]);
         setRestaurant(rRes.data);
         setMenuItems(mRes.data);

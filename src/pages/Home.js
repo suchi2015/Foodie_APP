@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../api';
 import RestaurantCard from '../components/RestaurantCard';
 import './Home.css';
 
@@ -21,7 +21,7 @@ const Home = () => {
       const params = {};
       if (search) params.search = search;
       if (activeCuisine !== 'All') params.cuisine = activeCuisine;
-      const { data } = await axios.get('/api/restaurants', { params });
+      const { data } = await api.get('/api/restaurants', { params });
       setRestaurants(data);
     } catch (err) {
       console.error(err);

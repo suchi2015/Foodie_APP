@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import axios from 'axios';
+import api from '../api';
 import toast from 'react-hot-toast';
 import './ImageUpload.css';
 
@@ -29,7 +29,7 @@ const ImageUpload = ({ value, onChange, label = 'Image' }) => {
     try {
       const formData = new FormData();
       formData.append('image', file);
-      const { data } = await axios.post('/api/upload', formData, {
+      const { data } = await api.post('/api/upload', formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
       setPreview(data.imageUrl);

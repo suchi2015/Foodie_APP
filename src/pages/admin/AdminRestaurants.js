@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../../api';
 import toast from 'react-hot-toast';
 import ImageUpload from '../../components/ImageUpload';
 
@@ -22,7 +22,7 @@ const AdminRestaurants = () => {
   const fetchRestaurants = async () => {
     try {
       setLoading(true);
-      const { data } = await axios.get('/api/restaurants');
+      const { data } = await api.get('/api/restaurants');
       setRestaurants(data);
     } catch (err) {
       toast.error('Failed to load restaurants');
@@ -66,10 +66,10 @@ const AdminRestaurants = () => {
       };
 
       if (editTarget) {
-        await axios.put(`/api/restaurants/${editTarget._id}`, payload);
+        await api.put(`/api/restaurants/${editTarget._id}`, payload);
         toast.success('Restaurant updated');
       } else {
-        await axios.post('/api/restaurants', payload);
+        await api.post('/api/restaurants', payload);
         toast.success('Restaurant added');
       }
       setShowModal(false);
@@ -84,7 +84,7 @@ const AdminRestaurants = () => {
   const handleDelete = async (id, name) => {
     if (!window.confirm(`Delete "${name}"? This will also remove all its menu items.`)) return;
     try {
-      await axios.delete(`/api/restaurants/${id}`);
+      await api.delete(`/api/restaurants/${id}`);
       toast.success('Restaurant deleted');
       fetchRestaurants();
     } catch (err) {

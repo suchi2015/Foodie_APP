@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
+import api from '../api';
 import './Orders.css';
 
 const STATUS_COLORS = {
@@ -19,7 +19,7 @@ const Orders = () => {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const { data } = await axios.get('/api/orders/myorders');
+        const { data } = await api.get('/api/orders/myorders');
         setOrders(data);
       } catch (err) {
         console.error(err);

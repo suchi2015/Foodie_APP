@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import api from '../api';
 import toast from 'react-hot-toast';
 import { useAuth } from '../context/AuthContext';
 import './Profile.css';
@@ -30,7 +30,7 @@ const Profile = () => {
       };
       if (form.password) payload.password = form.password;
 
-      const { data } = await axios.put('/api/auth/profile', payload);
+      const { data } = await api.put('/api/auth/profile', payload);
       updateUser(data);
       toast.success('Profile updated!');
       setForm((p) => ({ ...p, password: '' }));

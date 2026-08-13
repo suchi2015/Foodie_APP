@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../../api';
 import toast from 'react-hot-toast';
 import ImageUpload from '../../components/ImageUpload';
 
@@ -20,7 +20,7 @@ const AdminMenu = () => {
 
   // Load restaurants on mount
   useEffect(() => {
-    axios.get('/api/restaurants').then(({ data }) => {
+    api.get('/api/restaurants').then(({ data }) => {
       setRestaurants(data);
       if (data.length > 0) setSelectedRestaurant(data[0]._id);
     });
@@ -36,12 +36,12 @@ const AdminMenu = () => {
     try {
       setLoading(true);
       // Fetch all items (including unavailable) for admin — use a param flag
-      const { data } = await axios.get(`/api/menu/admin/${restaurantId}`);
+      const { data } = await api.get(`/api/menu/admin/${restaurantId}`);
       setMenuItems(data);
     } catch (err) {
       // Fallback to normal endpoint
       try {
-        const { data } = await axios.get(`/api/menu/${restaurantId}`);
+        const { data } = await api.get(`/api/menu/${restaurantId}`);
         setMenuItems(data);
       } catch (e) {
         toast.error('Failed to load menu');
@@ -84,10 +84,10 @@ const AdminMenu = () => {
       const payload = { ...form, price: Number(form.price) };
 
       if (editTarget) {
-        await axios.put(`/api/menu/${editTarget._id}`, payload);
+        await api.put(`/api/menu/${editTarget._id}`, payload);
         toast.success('Menu item updated');
       } else {
-        await axios.post('/api/menu', payload);
+        await api.post('/api/menu', payload);
         toast.success('Menu item added');
       }
       setShowModal(false);
@@ -102,7 +102,7 @@ const AdminMenu = () => {
   const handleDelete = async (id, name) => {
     if (!window.confirm(`Delete "${name}"?`)) return;
     try {
-      await axios.delete(`/api/menu/${id}`);
+      await api.delete(`/api/menu/${id}`);
       toast.success('Item deleted');
       fetchMenu(selectedRestaurant);
     } catch (err) {
@@ -112,7 +112,7 @@ const AdminMenu = () => {
 
   const toggleAvailability = async (item) => {
     try {
-      await axios.put(`/api/menu/${item._id}`, { isAvailable: !item.isAvailable });
+      await api.put(`/api/menu/${item._id}`, { isAvailable: !item.isAvailable });
       toast.success(`${item.name} ${!item.isAvailable ? 'enabled' : 'disabled'}`);
       fetchMenu(selectedRestaurant);
     } catch (err) {

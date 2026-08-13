@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import api from '../api';
 import toast from 'react-hot-toast';
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
@@ -42,7 +42,7 @@ const Checkout = () => {
         quantity: item.quantity,
       }));
 
-      const { data } = await axios.post('/api/orders', {
+      const { data } = await api.post('/api/orders', {
         restaurant: restaurantId,
         items: orderItems,
         totalAmount: subtotal + DELIVERY_FEE,

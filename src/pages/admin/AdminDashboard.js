@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
-import './AdminDashboard.css';
+import api from '../../api';
 import './AdminDashboard.css';
 
 const AdminDashboard = () => {
@@ -13,8 +12,8 @@ const AdminDashboard = () => {
     const fetchData = async () => {
       try {
         const [ordersRes, restaurantsRes] = await Promise.all([
-          axios.get('/api/orders'),
-          axios.get('/api/restaurants'),
+          api.get('/api/orders'),
+          api.get('/api/restaurants'),
         ]);
 
         const orders = ordersRes.data;
