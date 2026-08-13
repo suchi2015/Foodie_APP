@@ -30,7 +30,7 @@ router.post('/', protect, async (req, res) => {
 });
 
 // GET /api/orders/myorders — logged-in user's orders
-router.get('/myorders', protect, async (req, res) => {
+router.get('/myorder', protect, async (req, res) => {
   try {
     const orders = await Order.find({ user: req.user._id })
       .populate('restaurant', 'name image')
