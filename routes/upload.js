@@ -13,8 +13,15 @@ router.post('/', protect, adminOnly, upload.single('image'), (req, res) => {
   }
 
   // Return a URL the frontend can use
-  const imageUrl = `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`;
-  res.json({ imageUrl, filename: req.file.filename });
+  // const imageUrl = `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`;
+  // res.json({ imageUrl, filename: req.file.filename });
+
+  const imageUrl = req.file.path;
+
+res.json({
+  imageUrl,
+  filename: req.file.filename,
+});
 });
 
 // DELETE /api/upload/:filename — admin only, remove a file
