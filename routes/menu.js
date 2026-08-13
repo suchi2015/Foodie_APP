@@ -38,7 +38,7 @@ router.post('/', protect, adminOnly, async (req, res) => {
 });
 
 // PUT /api/menu/:id — admin only
-router.put('/:i', protect, adminOnly, async (req, res) => {
+router.put('/:id', protect, adminOnly, async (req, res) => {
   try {
     const item = await MenuItem.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
